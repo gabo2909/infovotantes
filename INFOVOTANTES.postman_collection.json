@@ -1,0 +1,865 @@
+{
+	"info": {
+		"_postman_id": "9e58e484-1ec1-4503-bb8a-b80c754790bc",
+		"name": "INFOVOTANTES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16939864"
+	},
+	"item": [
+		{
+			"name": "GESTIÓN DE USUARIOS",
+			"item": [
+				{
+					"name": "REGISTRAR USUARIO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\": \"Usuario\",\r\n    \"last_name\": \"Prueba\",\r\n    \"email\": \"correo_prueba@test.com\",\r\n    \"password\": \"1234\",\r\n    \"rol\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/registrar-usuario",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"registrar-usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"email2@test.com\",\r\n    \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "USER",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CERRAR SESIÓN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/logout",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DEPARTAMENTOS",
+			"item": [
+				{
+					"name": "OBTENER DEPARTAMENTOS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/departamentos",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"departamentos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ACTUALIZAR DEPARTAMENTOS",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Amazonas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/departamentos/1/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"departamentos",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ELIMINAR DEPARTAMENTO",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/departamentos/31/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"departamentos",
+								"31",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTRAR NUEVO DEPARTAMENTO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Vaupés\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/departamentos/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"departamentos",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MUNICIPIOS",
+			"item": [
+				{
+					"name": "OBTENER MUNICIPIOS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/municipios?expand=id_fk_departamento&fields=*",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"municipios"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "id_fk_departamento"
+								},
+								{
+									"key": "fields",
+									"value": "*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ACTUALIZAR MUNICIPIOS",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Cáceres\",\r\n    \"id_fk_departamento\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/municipios/1/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"municipios",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ELIMINAR MUNICIPIO",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/municipios/2/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"municipios",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTRAR NUEVO MUNICIPIO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Caucasia\",\r\n    \"id_fk_departamento\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/municipios/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"municipios",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "COMUNAS",
+			"item": [
+				{
+					"name": "OBTENER COMUNAS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/comunas",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"comunas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ACTUALIZAR COMUNAS",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Guarumo\",\r\n    \"id_fk_municipio\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/comunas/1/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"comunas",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ELIMINAR COMUNAS",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/comunas/1/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"comunas",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTRAR NUEVA COMUNA",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Guarumo\",\r\n    \"id_fk_municipio\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/comunas/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"comunas",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BARRIOS",
+			"item": [
+				{
+					"name": "OBTENER BARRIOS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/barrios",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"barrios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ACTUALIZAR BARRIOS",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Guarumo\",\r\n    \"id_fk_comuna\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/barrios/1/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"barrios",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ELIMINAR BARRIOS",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/barrios/1/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"barrios",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTRAR NUEVO BARRIO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Guarumo\",\r\n    \"id_fk_comuna\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/barrios/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"barrios",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUESTOS DE VOTACIÓN",
+			"item": [
+				{
+					"name": "OBTENER PUESTOS DE VOTACIÓN",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/puesto-votacion?expand=id_fk_municipio,id_fk_municipio.id_fk_departamento&fields=*",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"puesto-votacion"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "id_fk_municipio,id_fk_municipio.id_fk_departamento"
+								},
+								{
+									"key": "fields",
+									"value": "*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ACTUALIZAR PUESTOS DE VOTACIÓN",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"nombre\": \"Puesto 02\",\r\n    \"direccion\": \"Calle 1 sur\",\r\n    \"id_fk_municipio\": 3,\r\n    \"id_fk_usuario\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/puesto-votacion/2/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"puesto-votacion",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ELIMINAR PUESTOS DE VOTACIÓN",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/puesto-votacion/3/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"puesto-votacion",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTRAR NUEVO PUESTOS DE VOTACIÓN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Puesto 04\",\r\n    \"direccion\": \"Calle 1 sur\",\r\n    \"id_fk_municipio\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/puesto-votacion/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"puesto-votacion",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "VOTANTES",
+			"item": [
+				{
+					"name": "VOTANTES POR LÍDER",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/votantes/votantes_lider",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"votantes",
+								"votantes_lider"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VOTANTES EN EL SISTEMA",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/votantes/votantes_general",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"votantes",
+								"votantes_general"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VOTANTES POR MUNICIPIO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/votantes/votantes_municipio",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"votantes",
+								"votantes_municipio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VOTANTES POR MESA",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/votantes/votantes_mesa",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"votantes",
+								"votantes_mesa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTRAR VOTANTE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Votante\",\r\n    \"apellido\": \"Prueba 002\",\r\n    \"direccion\": \"Calle 10\",\r\n    \"telefono\": \"3154469522\",\r\n    \"cedula\": \"1090550100\",\r\n    \"id_fk_usuario\": 2,\r\n    \"id_fk_barrio\": 1,\r\n    \"id_fk_puesto_votacion\": 4,\r\n    \"mesa\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/votantes/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"votantes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ELIMINAR VOTANTE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/votantes/7/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"votantes",
+								"7",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OBTENER VOTANTES",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/votantes",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"votantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ACTUALIZAR VOTANTE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 8,\r\n    \"nombre\": \"Votante\",\r\n    \"apellido\": \"Prueba 003\",\r\n    \"direccion\": \"Calle 10\",\r\n    \"telefono\": \"3154469522\",\r\n    \"cedula\": \"1090550135\",\r\n    \"id_fk_usuario\": 3,\r\n    \"id_fk_barrio\": 1,\r\n    \"id_fk_puesto_votacion\": 4,\r\n    \"mesa\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/infovotantes/votantes/8/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"infovotantes",
+								"votantes",
+								"8",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

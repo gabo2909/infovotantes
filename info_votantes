@@ -1,0 +1,1863 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.4
+-- Dumped by pg_dump version 14.4
+
+-- Started on 2022-07-05 04:58:46
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+DROP DATABASE infovotantes;
+--
+-- TOC entry 3535 (class 1262 OID 16933)
+-- Name: infovotantes; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE infovotantes WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'Spanish_Colombia.1252';
+
+
+ALTER DATABASE infovotantes OWNER TO postgres;
+
+\connect infovotantes
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 3536 (class 0 OID 0)
+-- Name: infovotantes; Type: DATABASE PROPERTIES; Schema: -; Owner: postgres
+--
+
+ALTER DATABASE infovotantes SET log_statement TO 'all';
+
+
+\connect infovotantes
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2 (class 3079 OID 17180)
+-- Name: unaccent; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
+
+
+--
+-- TOC entry 3537 (class 0 OID 0)
+-- Dependencies: 2
+-- Name: EXTENSION unaccent; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 217 (class 1259 OID 16960)
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 16959)
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3538 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- TOC entry 219 (class 1259 OID 16969)
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id bigint NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 16968)
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3539 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- TOC entry 215 (class 1259 OID 16953)
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 16952)
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3540 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- TOC entry 230 (class 1259 OID 17087)
+-- Name: barrio; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.barrio (
+    id bigint NOT NULL,
+    nombre character varying(50) NOT NULL,
+    id_fk_comuna bigint NOT NULL
+);
+
+
+ALTER TABLE public.barrio OWNER TO postgres;
+
+--
+-- TOC entry 229 (class 1259 OID 17086)
+-- Name: barrio_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.barrio_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.barrio_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3541 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: barrio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.barrio_id_seq OWNED BY public.barrio.id;
+
+
+--
+-- TOC entry 240 (class 1259 OID 17131)
+-- Name: comuna; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.comuna (
+    id bigint NOT NULL,
+    nombre character varying(50) NOT NULL,
+    id_fk_municipio bigint NOT NULL
+);
+
+
+ALTER TABLE public.comuna OWNER TO postgres;
+
+--
+-- TOC entry 239 (class 1259 OID 17130)
+-- Name: comuna_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.comuna_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comuna_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3542 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: comuna_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.comuna_id_seq OWNED BY public.comuna.id;
+
+
+--
+-- TOC entry 232 (class 1259 OID 17094)
+-- Name: departamento; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.departamento (
+    id bigint NOT NULL,
+    nombre character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.departamento OWNER TO postgres;
+
+--
+-- TOC entry 231 (class 1259 OID 17093)
+-- Name: departamento_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.departamento_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.departamento_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3543 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: departamento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.departamento_id_seq OWNED BY public.departamento.id;
+
+
+--
+-- TOC entry 227 (class 1259 OID 17056)
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id bigint NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO postgres;
+
+--
+-- TOC entry 226 (class 1259 OID 17055)
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3544 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- TOC entry 213 (class 1259 OID 16944)
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO postgres;
+
+--
+-- TOC entry 212 (class 1259 OID 16943)
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3545 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- TOC entry 211 (class 1259 OID 16935)
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_migrations (
+    id bigint NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1259 OID 16934)
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3546 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- TOC entry 228 (class 1259 OID 17077)
+-- Name: django_session; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO postgres;
+
+--
+-- TOC entry 234 (class 1259 OID 17108)
+-- Name: municipio; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.municipio (
+    id bigint NOT NULL,
+    nombre character varying(50) NOT NULL,
+    id_fk_departamento bigint NOT NULL
+);
+
+
+ALTER TABLE public.municipio OWNER TO postgres;
+
+--
+-- TOC entry 233 (class 1259 OID 17107)
+-- Name: municipio_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.municipio_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.municipio_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3547 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: municipio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.municipio_id_seq OWNED BY public.municipio.id;
+
+
+--
+-- TOC entry 236 (class 1259 OID 17115)
+-- Name: puesto_votacion; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.puesto_votacion (
+    id bigint NOT NULL,
+    nombre character varying(50) NOT NULL,
+    direccion character varying(100) NOT NULL,
+    id_fk_municipio bigint NOT NULL,
+    id_fk_usuario bigint NOT NULL
+);
+
+
+ALTER TABLE public.puesto_votacion OWNER TO postgres;
+
+--
+-- TOC entry 235 (class 1259 OID 17114)
+-- Name: puesto_votacion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.puesto_votacion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.puesto_votacion_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3548 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: puesto_votacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.puesto_votacion_id_seq OWNED BY public.puesto_votacion.id;
+
+
+--
+-- TOC entry 221 (class 1259 OID 17002)
+-- Name: registraduria_user; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.registraduria_user (
+    id bigint NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    first_name character varying(150) NOT NULL,
+    last_name character varying(150) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL,
+    email character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    rol smallint NOT NULL,
+    CONSTRAINT registraduria_user_rol_check CHECK ((rol >= 0))
+);
+
+
+ALTER TABLE public.registraduria_user OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 17013)
+-- Name: registraduria_user_groups; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.registraduria_user_groups (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.registraduria_user_groups OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1259 OID 17012)
+-- Name: registraduria_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.registraduria_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.registraduria_user_groups_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3549 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: registraduria_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.registraduria_user_groups_id_seq OWNED BY public.registraduria_user_groups.id;
+
+
+--
+-- TOC entry 220 (class 1259 OID 17001)
+-- Name: registraduria_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.registraduria_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.registraduria_user_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3550 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: registraduria_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.registraduria_user_id_seq OWNED BY public.registraduria_user.id;
+
+
+--
+-- TOC entry 225 (class 1259 OID 17020)
+-- Name: registraduria_user_user_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.registraduria_user_user_permissions (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.registraduria_user_user_permissions OWNER TO postgres;
+
+--
+-- TOC entry 224 (class 1259 OID 17019)
+-- Name: registraduria_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.registraduria_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.registraduria_user_user_permissions_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3551 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: registraduria_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.registraduria_user_user_permissions_id_seq OWNED BY public.registraduria_user_user_permissions.id;
+
+
+--
+-- TOC entry 242 (class 1259 OID 17221)
+-- Name: traza; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.traza (
+    id bigint NOT NULL,
+    fecha_registro timestamp with time zone NOT NULL,
+    id_fk_usuario bigint NOT NULL,
+    id_fk_votante bigint NOT NULL
+);
+
+
+ALTER TABLE public.traza OWNER TO postgres;
+
+--
+-- TOC entry 241 (class 1259 OID 17220)
+-- Name: traza_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.traza_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.traza_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3552 (class 0 OID 0)
+-- Dependencies: 241
+-- Name: traza_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.traza_id_seq OWNED BY public.traza.id;
+
+
+--
+-- TOC entry 238 (class 1259 OID 17124)
+-- Name: votante; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.votante (
+    id bigint NOT NULL,
+    nombre character varying(50) NOT NULL,
+    apellido character varying(50) NOT NULL,
+    direccion character varying(100) NOT NULL,
+    telefono character varying(10) NOT NULL,
+    cedula character varying(10) NOT NULL,
+    mesa integer,
+    id_fk_barrio bigint NOT NULL,
+    id_fk_puesto_votacion bigint NOT NULL,
+    id_fk_usuario bigint NOT NULL
+);
+
+
+ALTER TABLE public.votante OWNER TO postgres;
+
+--
+-- TOC entry 237 (class 1259 OID 17123)
+-- Name: votante_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.votante_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.votante_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3553 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: votante_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.votante_id_seq OWNED BY public.votante.id;
+
+
+--
+-- TOC entry 3253 (class 2604 OID 16963)
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- TOC entry 3254 (class 2604 OID 16972)
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- TOC entry 3252 (class 2604 OID 16956)
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- TOC entry 3261 (class 2604 OID 17090)
+-- Name: barrio id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.barrio ALTER COLUMN id SET DEFAULT nextval('public.barrio_id_seq'::regclass);
+
+
+--
+-- TOC entry 3266 (class 2604 OID 17134)
+-- Name: comuna id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comuna ALTER COLUMN id SET DEFAULT nextval('public.comuna_id_seq'::regclass);
+
+
+--
+-- TOC entry 3262 (class 2604 OID 17097)
+-- Name: departamento id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.departamento ALTER COLUMN id SET DEFAULT nextval('public.departamento_id_seq'::regclass);
+
+
+--
+-- TOC entry 3259 (class 2604 OID 17059)
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- TOC entry 3251 (class 2604 OID 16947)
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- TOC entry 3250 (class 2604 OID 16938)
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- TOC entry 3263 (class 2604 OID 17111)
+-- Name: municipio id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.municipio ALTER COLUMN id SET DEFAULT nextval('public.municipio_id_seq'::regclass);
+
+
+--
+-- TOC entry 3264 (class 2604 OID 17118)
+-- Name: puesto_votacion id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.puesto_votacion ALTER COLUMN id SET DEFAULT nextval('public.puesto_votacion_id_seq'::regclass);
+
+
+--
+-- TOC entry 3255 (class 2604 OID 17005)
+-- Name: registraduria_user id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user ALTER COLUMN id SET DEFAULT nextval('public.registraduria_user_id_seq'::regclass);
+
+
+--
+-- TOC entry 3257 (class 2604 OID 17016)
+-- Name: registraduria_user_groups id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user_groups ALTER COLUMN id SET DEFAULT nextval('public.registraduria_user_groups_id_seq'::regclass);
+
+
+--
+-- TOC entry 3258 (class 2604 OID 17023)
+-- Name: registraduria_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.registraduria_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- TOC entry 3267 (class 2604 OID 17224)
+-- Name: traza id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.traza ALTER COLUMN id SET DEFAULT nextval('public.traza_id_seq'::regclass);
+
+
+--
+-- TOC entry 3265 (class 2604 OID 17127)
+-- Name: votante id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.votante ALTER COLUMN id SET DEFAULT nextval('public.votante_id_seq'::regclass);
+
+
+--
+-- TOC entry 3504 (class 0 OID 16960)
+-- Dependencies: 217
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3506 (class 0 OID 16969)
+-- Dependencies: 219
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3502 (class 0 OID 16953)
+-- Dependencies: 215
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (1, 'Can add log entry', 1, 'add_logentry');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (2, 'Can change log entry', 1, 'change_logentry');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (3, 'Can delete log entry', 1, 'delete_logentry');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (4, 'Can view log entry', 1, 'view_logentry');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (5, 'Can add permission', 2, 'add_permission');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (6, 'Can change permission', 2, 'change_permission');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (7, 'Can delete permission', 2, 'delete_permission');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (8, 'Can view permission', 2, 'view_permission');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (9, 'Can add group', 3, 'add_group');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (10, 'Can change group', 3, 'change_group');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (11, 'Can delete group', 3, 'delete_group');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (12, 'Can view group', 3, 'view_group');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (13, 'Can add content type', 4, 'add_contenttype');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (14, 'Can change content type', 4, 'change_contenttype');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (15, 'Can delete content type', 4, 'delete_contenttype');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (16, 'Can view content type', 4, 'view_contenttype');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (17, 'Can add session', 5, 'add_session');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (18, 'Can change session', 5, 'change_session');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (19, 'Can delete session', 5, 'delete_session');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (20, 'Can view session', 5, 'view_session');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (21, 'Can add user', 6, 'add_user');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (22, 'Can change user', 6, 'change_user');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (23, 'Can delete user', 6, 'delete_user');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (24, 'Can view user', 6, 'view_user');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (25, 'Can add Barrio', 7, 'add_barrio');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (26, 'Can change Barrio', 7, 'change_barrio');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (27, 'Can delete Barrio', 7, 'delete_barrio');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (28, 'Can view Barrio', 7, 'view_barrio');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (29, 'Can add Departamento', 8, 'add_departamento');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (30, 'Can change Departamento', 8, 'change_departamento');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (31, 'Can delete Departamento', 8, 'delete_departamento');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (32, 'Can view Departamento', 8, 'view_departamento');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (33, 'Can add Líder', 9, 'add_lider');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (34, 'Can change Líder', 9, 'change_lider');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (35, 'Can delete Líder', 9, 'delete_lider');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (36, 'Can view Líder', 9, 'view_lider');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (37, 'Can add Municipio', 10, 'add_municipio');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (38, 'Can change Municipio', 10, 'change_municipio');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (39, 'Can delete Municipio', 10, 'delete_municipio');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (40, 'Can view Municipio', 10, 'view_municipio');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (41, 'Can add Puesto votación', 11, 'add_puestovotacion');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (42, 'Can change Puesto votación', 11, 'change_puestovotacion');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (43, 'Can delete Puesto votación', 11, 'delete_puestovotacion');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (44, 'Can view Puesto votación', 11, 'view_puestovotacion');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (45, 'Can add Votante', 12, 'add_votante');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (46, 'Can change Votante', 12, 'change_votante');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (47, 'Can delete Votante', 12, 'delete_votante');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (48, 'Can view Votante', 12, 'view_votante');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (49, 'Can add Comuna', 13, 'add_comuna');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (50, 'Can change Comuna', 13, 'change_comuna');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (51, 'Can delete Comuna', 13, 'delete_comuna');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (52, 'Can view Comuna', 13, 'view_comuna');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (53, 'Can add traza', 14, 'add_traza');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (54, 'Can change traza', 14, 'change_traza');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (55, 'Can delete traza', 14, 'delete_traza');
+INSERT INTO public.auth_permission (id, name, content_type_id, codename) VALUES (56, 'Can view traza', 14, 'view_traza');
+
+
+--
+-- TOC entry 3517 (class 0 OID 17087)
+-- Dependencies: 230
+-- Data for Name: barrio; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.barrio (id, nombre, id_fk_comuna) VALUES (1, 'Barrio prueba', 2);
+
+
+--
+-- TOC entry 3527 (class 0 OID 17131)
+-- Dependencies: 240
+-- Data for Name: comuna; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.comuna (id, nombre, id_fk_municipio) VALUES (2, 'Guarumo', 1);
+
+
+--
+-- TOC entry 3519 (class 0 OID 17094)
+-- Dependencies: 232
+-- Data for Name: departamento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.departamento (id, nombre) VALUES (2, 'Antioquia');
+INSERT INTO public.departamento (id, nombre) VALUES (3, 'Arauca');
+INSERT INTO public.departamento (id, nombre) VALUES (4, 'Atlántico');
+INSERT INTO public.departamento (id, nombre) VALUES (5, 'Bogotá');
+INSERT INTO public.departamento (id, nombre) VALUES (6, 'Bolívar');
+INSERT INTO public.departamento (id, nombre) VALUES (7, 'Boyacá');
+INSERT INTO public.departamento (id, nombre) VALUES (8, 'Caldas');
+INSERT INTO public.departamento (id, nombre) VALUES (9, 'Caquetá');
+INSERT INTO public.departamento (id, nombre) VALUES (10, 'Casanare');
+INSERT INTO public.departamento (id, nombre) VALUES (11, 'Cauca');
+INSERT INTO public.departamento (id, nombre) VALUES (12, 'Cesar');
+INSERT INTO public.departamento (id, nombre) VALUES (13, 'Chocó');
+INSERT INTO public.departamento (id, nombre) VALUES (14, 'Córdoba');
+INSERT INTO public.departamento (id, nombre) VALUES (15, 'Cundinamarca');
+INSERT INTO public.departamento (id, nombre) VALUES (16, 'Guainía');
+INSERT INTO public.departamento (id, nombre) VALUES (17, 'Guaviare');
+INSERT INTO public.departamento (id, nombre) VALUES (18, 'Huila');
+INSERT INTO public.departamento (id, nombre) VALUES (19, 'La Guajira');
+INSERT INTO public.departamento (id, nombre) VALUES (20, 'Magdalena');
+INSERT INTO public.departamento (id, nombre) VALUES (21, 'Meta');
+INSERT INTO public.departamento (id, nombre) VALUES (22, 'Nariño');
+INSERT INTO public.departamento (id, nombre) VALUES (23, 'Norte de Santander');
+INSERT INTO public.departamento (id, nombre) VALUES (24, 'Putumayo');
+INSERT INTO public.departamento (id, nombre) VALUES (25, 'Quindío');
+INSERT INTO public.departamento (id, nombre) VALUES (26, 'Risaralda');
+INSERT INTO public.departamento (id, nombre) VALUES (27, 'San Andrés y Providencia');
+INSERT INTO public.departamento (id, nombre) VALUES (28, 'Santander');
+INSERT INTO public.departamento (id, nombre) VALUES (29, 'Sucre');
+INSERT INTO public.departamento (id, nombre) VALUES (30, 'Tolima');
+INSERT INTO public.departamento (id, nombre) VALUES (1, 'Amazonas');
+INSERT INTO public.departamento (id, nombre) VALUES (34, 'Vaupés');
+
+
+--
+-- TOC entry 3514 (class 0 OID 17056)
+-- Dependencies: 227
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3500 (class 0 OID 16944)
+-- Dependencies: 213
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (1, 'admin', 'logentry');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (2, 'auth', 'permission');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (3, 'auth', 'group');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (4, 'contenttypes', 'contenttype');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (5, 'sessions', 'session');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (6, 'registraduria', 'user');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (7, 'registraduria', 'barrio');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (8, 'registraduria', 'departamento');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (9, 'registraduria', 'lider');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (10, 'registraduria', 'municipio');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (11, 'registraduria', 'puestovotacion');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (12, 'registraduria', 'votante');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (13, 'registraduria', 'comuna');
+INSERT INTO public.django_content_type (id, app_label, model) VALUES (14, 'registraduria', 'traza');
+
+
+--
+-- TOC entry 3498 (class 0 OID 16935)
+-- Dependencies: 211
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (1, 'contenttypes', '0001_initial', '2022-07-04 18:55:51.959085-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (2, 'contenttypes', '0002_remove_content_type_name', '2022-07-04 18:55:51.991096-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (3, 'auth', '0001_initial', '2022-07-04 18:55:52.103119-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (4, 'auth', '0002_alter_permission_name_max_length', '2022-07-04 18:55:52.111122-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (5, 'auth', '0003_alter_user_email_max_length', '2022-07-04 18:55:52.127134-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (6, 'auth', '0004_alter_user_username_opts', '2022-07-04 18:55:52.143131-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (7, 'auth', '0005_alter_user_last_login_null', '2022-07-04 18:55:52.159137-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (8, 'auth', '0006_require_contenttypes_0002', '2022-07-04 18:55:52.159137-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (9, 'auth', '0007_alter_validators_add_error_messages', '2022-07-04 18:55:52.17514-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (10, 'auth', '0008_alter_user_username_max_length', '2022-07-04 18:55:52.191142-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (11, 'auth', '0009_alter_user_last_name_max_length', '2022-07-04 18:55:52.207147-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (12, 'auth', '0010_alter_group_name_max_length', '2022-07-04 18:55:52.223152-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (13, 'auth', '0011_update_proxy_permissions', '2022-07-04 18:55:52.239155-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (14, 'auth', '0012_alter_user_first_name_max_length', '2022-07-04 18:55:52.255157-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (15, 'registraduria', '0001_initial', '2022-07-04 18:55:52.391194-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (16, 'admin', '0001_initial', '2022-07-04 18:55:52.447205-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (17, 'admin', '0002_logentry_remove_auto_add', '2022-07-04 18:55:52.463209-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (18, 'admin', '0003_logentry_add_action_flag_choices', '2022-07-04 18:55:52.479218-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (19, 'sessions', '0001_initial', '2022-07-04 18:55:52.519222-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (20, 'registraduria', '0002_auto_20220704_2020', '2022-07-04 20:20:45.475771-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (21, 'registraduria', '0003_auto_20220705_0020', '2022-07-05 00:21:26.267053-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (22, 'registraduria', '0004_auto_20220705_0034', '2022-07-05 00:35:05.707512-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (23, 'registraduria', '0005_auto_20220705_0049', '2022-07-05 00:49:07.809811-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (24, 'registraduria', '0006_traza', '2022-07-05 02:10:40.011765-05');
+INSERT INTO public.django_migrations (id, app, name, applied) VALUES (25, 'registraduria', '0007_auto_20220705_0316', '2022-07-05 03:16:33.877152-05');
+
+
+--
+-- TOC entry 3515 (class 0 OID 17077)
+-- Dependencies: 228
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3521 (class 0 OID 17108)
+-- Dependencies: 234
+-- Data for Name: municipio; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.municipio (id, nombre, id_fk_departamento) VALUES (1, 'Cáceres', 2);
+INSERT INTO public.municipio (id, nombre, id_fk_departamento) VALUES (3, 'Soacha', 5);
+
+
+--
+-- TOC entry 3523 (class 0 OID 17115)
+-- Dependencies: 236
+-- Data for Name: puesto_votacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.puesto_votacion (id, nombre, direccion, id_fk_municipio, id_fk_usuario) VALUES (2, 'Puesto 03', 'Calle 1 sur', 1, 2);
+INSERT INTO public.puesto_votacion (id, nombre, direccion, id_fk_municipio, id_fk_usuario) VALUES (4, 'Puesto 04', 'Calle 1 sur', 3, 3);
+
+
+--
+-- TOC entry 3508 (class 0 OID 17002)
+-- Dependencies: 221
+-- Data for Name: registraduria_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.registraduria_user (id, last_login, is_superuser, first_name, last_name, is_staff, is_active, date_joined, email, password, rol) VALUES (12, NULL, false, 'Jesús Gabriel', 'Castro', false, true, '2022-07-04 22:28:21.616311-05', 'email-prueba@test.com', 'pbkdf2_sha256$260000$L3lznTTUtoXuCv3wV74Hfv$Z9KqK2djRPjGjnxbOA8T15puyVJJ3peS9dOOYTsNnvY=', 2);
+INSERT INTO public.registraduria_user (id, last_login, is_superuser, first_name, last_name, is_staff, is_active, date_joined, email, password, rol) VALUES (14, NULL, false, 'Usuario', 'Prueba', false, true, '2022-07-05 00:36:28.630131-05', 'correo_prueba@test.com', 'pbkdf2_sha256$260000$cac6W4GZlS67Vf39Erx3FY$xVvxsZrXyAk46/xBo2T9WCjAM3AkmxZyg0z0uoD0uOw=', 2);
+INSERT INTO public.registraduria_user (id, last_login, is_superuser, first_name, last_name, is_staff, is_active, date_joined, email, password, rol) VALUES (2, NULL, false, 'Luis', 'Mejias', false, true, '2022-07-04 19:11:48.843576-05', 'email@example.com', 'pbkdf2_sha256$260000$MAs9ClB5Cr1gwOgBpsnGfH$Ssu+Q2WKmSop0K6y8X3hp6VEya1VaSt2KdDVqZXJ+4Y=', 2);
+INSERT INTO public.registraduria_user (id, last_login, is_superuser, first_name, last_name, is_staff, is_active, date_joined, email, password, rol) VALUES (3, NULL, false, 'Alberto', 'Vergara', false, true, '2022-07-04 22:28:21.616311-05', 'email2@test.com', 'pbkdf2_sha256$260000$L3lznTTUtoXuCv3wV74Hfv$Z9KqK2djRPjGjnxbOA8T15puyVJJ3peS9dOOYTsNnvY=', 2);
+
+
+--
+-- TOC entry 3510 (class 0 OID 17013)
+-- Dependencies: 223
+-- Data for Name: registraduria_user_groups; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3512 (class 0 OID 17020)
+-- Dependencies: 225
+-- Data for Name: registraduria_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3529 (class 0 OID 17221)
+-- Dependencies: 242
+-- Data for Name: traza; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.traza (id, fecha_registro, id_fk_usuario, id_fk_votante) VALUES (1, '2022-07-05 02:36:17.396386-05', 3, 9);
+INSERT INTO public.traza (id, fecha_registro, id_fk_usuario, id_fk_votante) VALUES (2, '2022-07-05 03:17:18.510176-05', 3, 10);
+
+
+--
+-- TOC entry 3525 (class 0 OID 17124)
+-- Dependencies: 238
+-- Data for Name: votante; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.votante (id, nombre, apellido, direccion, telefono, cedula, mesa, id_fk_barrio, id_fk_puesto_votacion, id_fk_usuario) VALUES (8, 'Votante', 'Prueba 002', 'Calle 10', '3154469522', '1090550135', 3, 1, 4, 3);
+INSERT INTO public.votante (id, nombre, apellido, direccion, telefono, cedula, mesa, id_fk_barrio, id_fk_puesto_votacion, id_fk_usuario) VALUES (9, 'Votante', 'Prueba 002', 'Calle 10', '3154469522', '1090550136', 3, 1, 4, 3);
+INSERT INTO public.votante (id, nombre, apellido, direccion, telefono, cedula, mesa, id_fk_barrio, id_fk_puesto_votacion, id_fk_usuario) VALUES (10, 'Votante', 'Prueba 002', 'Calle 10', '3154469522', '1090550100', 3, 1, 4, 3);
+
+
+--
+-- TOC entry 3554 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- TOC entry 3555 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- TOC entry 3556 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 56, true);
+
+
+--
+-- TOC entry 3557 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: barrio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.barrio_id_seq', 1, true);
+
+
+--
+-- TOC entry 3558 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: comuna_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.comuna_id_seq', 2, true);
+
+
+--
+-- TOC entry 3559 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: departamento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.departamento_id_seq', 34, true);
+
+
+--
+-- TOC entry 3560 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
+
+
+--
+-- TOC entry 3561 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 14, true);
+
+
+--
+-- TOC entry 3562 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 25, true);
+
+
+--
+-- TOC entry 3563 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: municipio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.municipio_id_seq', 3, true);
+
+
+--
+-- TOC entry 3564 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: puesto_votacion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.puesto_votacion_id_seq', 4, true);
+
+
+--
+-- TOC entry 3565 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: registraduria_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.registraduria_user_groups_id_seq', 1, false);
+
+
+--
+-- TOC entry 3566 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: registraduria_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.registraduria_user_id_seq', 14, true);
+
+
+--
+-- TOC entry 3567 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: registraduria_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.registraduria_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- TOC entry 3568 (class 0 OID 0)
+-- Dependencies: 241
+-- Name: traza_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.traza_id_seq', 2, true);
+
+
+--
+-- TOC entry 3569 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: votante_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.votante_id_seq', 10, true);
+
+
+--
+-- TOC entry 3281 (class 2606 OID 16999)
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- TOC entry 3286 (class 2606 OID 16985)
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- TOC entry 3289 (class 2606 OID 16974)
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3283 (class 2606 OID 16965)
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3276 (class 2606 OID 16976)
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- TOC entry 3278 (class 2606 OID 16958)
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3317 (class 2606 OID 17092)
+-- Name: barrio barrio_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.barrio
+    ADD CONSTRAINT barrio_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3334 (class 2606 OID 17136)
+-- Name: comuna comuna_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comuna
+    ADD CONSTRAINT comuna_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3319 (class 2606 OID 17099)
+-- Name: departamento departamento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.departamento
+    ADD CONSTRAINT departamento_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3309 (class 2606 OID 17064)
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3271 (class 2606 OID 16951)
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- TOC entry 3273 (class 2606 OID 16949)
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3269 (class 2606 OID 16942)
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3313 (class 2606 OID 17083)
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- TOC entry 3322 (class 2606 OID 17113)
+-- Name: municipio municipio_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.municipio
+    ADD CONSTRAINT municipio_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3326 (class 2606 OID 17120)
+-- Name: puesto_votacion puesto_votacion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.puesto_votacion
+    ADD CONSTRAINT puesto_votacion_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3292 (class 2606 OID 17011)
+-- Name: registraduria_user registraduria_user_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user
+    ADD CONSTRAINT registraduria_user_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 3297 (class 2606 OID 17018)
+-- Name: registraduria_user_groups registraduria_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user_groups
+    ADD CONSTRAINT registraduria_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3300 (class 2606 OID 17028)
+-- Name: registraduria_user_groups registraduria_user_groups_user_id_group_id_d82ac220_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user_groups
+    ADD CONSTRAINT registraduria_user_groups_user_id_group_id_d82ac220_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- TOC entry 3294 (class 2606 OID 17009)
+-- Name: registraduria_user registraduria_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user
+    ADD CONSTRAINT registraduria_user_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3302 (class 2606 OID 17042)
+-- Name: registraduria_user_user_permissions registraduria_user_user__user_id_permission_id_e5e7638f_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user_user_permissions
+    ADD CONSTRAINT registraduria_user_user__user_id_permission_id_e5e7638f_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- TOC entry 3305 (class 2606 OID 17025)
+-- Name: registraduria_user_user_permissions registraduria_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user_user_permissions
+    ADD CONSTRAINT registraduria_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3338 (class 2606 OID 17226)
+-- Name: traza traza_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.traza
+    ADD CONSTRAINT traza_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3331 (class 2606 OID 17129)
+-- Name: votante votante_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.votante
+    ADD CONSTRAINT votante_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3279 (class 1259 OID 17000)
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- TOC entry 3284 (class 1259 OID 16996)
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- TOC entry 3287 (class 1259 OID 16997)
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- TOC entry 3274 (class 1259 OID 16982)
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- TOC entry 3315 (class 1259 OID 17178)
+-- Name: barrio_id_fk_comuna_0d26f207; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX barrio_id_fk_comuna_0d26f207 ON public.barrio USING btree (id_fk_comuna);
+
+
+--
+-- TOC entry 3332 (class 1259 OID 17177)
+-- Name: comuna_id_fk_municipio_5a70ee6f; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX comuna_id_fk_municipio_5a70ee6f ON public.comuna USING btree (id_fk_municipio);
+
+
+--
+-- TOC entry 3307 (class 1259 OID 17075)
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- TOC entry 3310 (class 1259 OID 17076)
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- TOC entry 3311 (class 1259 OID 17085)
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- TOC entry 3314 (class 1259 OID 17084)
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- TOC entry 3320 (class 1259 OID 17147)
+-- Name: municipio_id_fk_departamento_52eafe81; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX municipio_id_fk_departamento_52eafe81 ON public.municipio USING btree (id_fk_departamento);
+
+
+--
+-- TOC entry 3323 (class 1259 OID 17153)
+-- Name: puesto_votacion_id_fk_municipio_9835b255; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX puesto_votacion_id_fk_municipio_9835b255 ON public.puesto_votacion USING btree (id_fk_municipio);
+
+
+--
+-- TOC entry 3324 (class 1259 OID 17211)
+-- Name: puesto_votacion_id_fk_usuario_0126068a; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX puesto_votacion_id_fk_usuario_0126068a ON public.puesto_votacion USING btree (id_fk_usuario);
+
+
+--
+-- TOC entry 3290 (class 1259 OID 17026)
+-- Name: registraduria_user_email_6975e8a7_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX registraduria_user_email_6975e8a7_like ON public.registraduria_user USING btree (email varchar_pattern_ops);
+
+
+--
+-- TOC entry 3295 (class 1259 OID 17040)
+-- Name: registraduria_user_groups_group_id_ff8b5d91; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX registraduria_user_groups_group_id_ff8b5d91 ON public.registraduria_user_groups USING btree (group_id);
+
+
+--
+-- TOC entry 3298 (class 1259 OID 17039)
+-- Name: registraduria_user_groups_user_id_91abca24; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX registraduria_user_groups_user_id_91abca24 ON public.registraduria_user_groups USING btree (user_id);
+
+
+--
+-- TOC entry 3303 (class 1259 OID 17054)
+-- Name: registraduria_user_user_permissions_permission_id_96f2a293; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX registraduria_user_user_permissions_permission_id_96f2a293 ON public.registraduria_user_user_permissions USING btree (permission_id);
+
+
+--
+-- TOC entry 3306 (class 1259 OID 17053)
+-- Name: registraduria_user_user_permissions_user_id_b1d07b5a; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX registraduria_user_user_permissions_user_id_b1d07b5a ON public.registraduria_user_user_permissions USING btree (user_id);
+
+
+--
+-- TOC entry 3335 (class 1259 OID 17237)
+-- Name: traza_id_fk_usuario_e580b7a8; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX traza_id_fk_usuario_e580b7a8 ON public.traza USING btree (id_fk_usuario);
+
+
+--
+-- TOC entry 3336 (class 1259 OID 17238)
+-- Name: traza_id_fk_votante_170407f5; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX traza_id_fk_votante_170407f5 ON public.traza USING btree (id_fk_votante);
+
+
+--
+-- TOC entry 3327 (class 1259 OID 17169)
+-- Name: votante_id_fk_barrio_8442ea43; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX votante_id_fk_barrio_8442ea43 ON public.votante USING btree (id_fk_barrio);
+
+
+--
+-- TOC entry 3328 (class 1259 OID 17171)
+-- Name: votante_id_fk_puesto_votacion_deb9638d; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX votante_id_fk_puesto_votacion_deb9638d ON public.votante USING btree (id_fk_puesto_votacion);
+
+
+--
+-- TOC entry 3329 (class 1259 OID 17219)
+-- Name: votante_id_fk_usuario_2e48525c; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX votante_id_fk_usuario_2e48525c ON public.votante USING btree (id_fk_usuario);
+
+
+--
+-- TOC entry 3341 (class 2606 OID 16991)
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3340 (class 2606 OID 16986)
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3339 (class 2606 OID 16977)
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3348 (class 2606 OID 17137)
+-- Name: barrio barrio_id_fk_comuna_0d26f207_fk_comuna_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.barrio
+    ADD CONSTRAINT barrio_id_fk_comuna_0d26f207_fk_comuna_id FOREIGN KEY (id_fk_comuna) REFERENCES public.comuna(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3355 (class 2606 OID 17172)
+-- Name: comuna comuna_id_fk_municipio_5a70ee6f_fk_municipio_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comuna
+    ADD CONSTRAINT comuna_id_fk_municipio_5a70ee6f_fk_municipio_id FOREIGN KEY (id_fk_municipio) REFERENCES public.municipio(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3346 (class 2606 OID 17065)
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3347 (class 2606 OID 17070)
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_registraduria_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_registraduria_user_id FOREIGN KEY (user_id) REFERENCES public.registraduria_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3349 (class 2606 OID 17142)
+-- Name: municipio municipio_id_fk_departamento_52eafe81_fk_departamento_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.municipio
+    ADD CONSTRAINT municipio_id_fk_departamento_52eafe81_fk_departamento_id FOREIGN KEY (id_fk_departamento) REFERENCES public.departamento(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3350 (class 2606 OID 17148)
+-- Name: puesto_votacion puesto_votacion_id_fk_municipio_9835b255_fk_municipio_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.puesto_votacion
+    ADD CONSTRAINT puesto_votacion_id_fk_municipio_9835b255_fk_municipio_id FOREIGN KEY (id_fk_municipio) REFERENCES public.municipio(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3351 (class 2606 OID 17200)
+-- Name: puesto_votacion puesto_votacion_id_fk_usuario_0126068a_fk_registraduria_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.puesto_votacion
+    ADD CONSTRAINT puesto_votacion_id_fk_usuario_0126068a_fk_registraduria_user_id FOREIGN KEY (id_fk_usuario) REFERENCES public.registraduria_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3342 (class 2606 OID 17029)
+-- Name: registraduria_user_groups registraduria_user_g_user_id_91abca24_fk_registrad; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user_groups
+    ADD CONSTRAINT registraduria_user_g_user_id_91abca24_fk_registrad FOREIGN KEY (user_id) REFERENCES public.registraduria_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3343 (class 2606 OID 17034)
+-- Name: registraduria_user_groups registraduria_user_groups_group_id_ff8b5d91_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user_groups
+    ADD CONSTRAINT registraduria_user_groups_group_id_ff8b5d91_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3345 (class 2606 OID 17048)
+-- Name: registraduria_user_user_permissions registraduria_user_u_permission_id_96f2a293_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user_user_permissions
+    ADD CONSTRAINT registraduria_user_u_permission_id_96f2a293_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3344 (class 2606 OID 17043)
+-- Name: registraduria_user_user_permissions registraduria_user_u_user_id_b1d07b5a_fk_registrad; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.registraduria_user_user_permissions
+    ADD CONSTRAINT registraduria_user_u_user_id_b1d07b5a_fk_registrad FOREIGN KEY (user_id) REFERENCES public.registraduria_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3356 (class 2606 OID 17227)
+-- Name: traza traza_id_fk_usuario_e580b7a8_fk_registraduria_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.traza
+    ADD CONSTRAINT traza_id_fk_usuario_e580b7a8_fk_registraduria_user_id FOREIGN KEY (id_fk_usuario) REFERENCES public.registraduria_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3357 (class 2606 OID 17232)
+-- Name: traza traza_id_fk_votante_170407f5_fk_votante_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.traza
+    ADD CONSTRAINT traza_id_fk_votante_170407f5_fk_votante_id FOREIGN KEY (id_fk_votante) REFERENCES public.votante(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3352 (class 2606 OID 17154)
+-- Name: votante votante_id_fk_barrio_8442ea43_fk_barrio_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.votante
+    ADD CONSTRAINT votante_id_fk_barrio_8442ea43_fk_barrio_id FOREIGN KEY (id_fk_barrio) REFERENCES public.barrio(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3353 (class 2606 OID 17164)
+-- Name: votante votante_id_fk_puesto_votacion_deb9638d_fk_puesto_votacion_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.votante
+    ADD CONSTRAINT votante_id_fk_puesto_votacion_deb9638d_fk_puesto_votacion_id FOREIGN KEY (id_fk_puesto_votacion) REFERENCES public.puesto_votacion(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3354 (class 2606 OID 17214)
+-- Name: votante votante_id_fk_usuario_2e48525c_fk_registraduria_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.votante
+    ADD CONSTRAINT votante_id_fk_usuario_2e48525c_fk_registraduria_user_id FOREIGN KEY (id_fk_usuario) REFERENCES public.registraduria_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+-- Completed on 2022-07-05 04:58:46
+
+--
+-- PostgreSQL database dump complete
+--
+
